@@ -15,7 +15,7 @@ Spec-Kit provides a structured workflow for software development using AI agents
    mkdir -p ~/.aws/amazonq/prompts && cp prompts/*.md ~/.aws/amazonq/prompts/
 
    # For GitHub Copilot
-   mkdir -p ~/.github/prompts && cp prompts/*.md ~/.github/prompts/
+   mkdir -p .github/prompts && for file in prompts/*.md; do cp "$file" .github/prompts/"$(basename "$file" .md).prompt.md"; done
    ```
 
 2. **Start developing:**
@@ -26,58 +26,94 @@ Spec-Kit provides a structured workflow for software development using AI agents
    @implement
    ```
 
-## Example Workflow
+## Workflow Diagrams
+
+### Standard Workflow
+
+```
+┌─────────────┐    ┌──────────────┐    ┌─────────────┐    ┌─────────────┐
+│   @specify  │───▶│    @plan     │───▶│   @tasks    │───▶│ @implement  │
+│             │    │              │    │             │    │             │
+│ Creates     │    │ Generates    │    │ Creates     │    │ Executes    │
+│ spec.md     │    │ design docs  │    │ tasks.md    │    │ code        │
+└─────────────┘    └──────────────┘    └─────────────┘    └─────────────┘
+```
+
+### Enhanced Workflow with Reference Folders
+
+```
+┌───────────────────┐    ┌─────────────┐    ┌──────────────┐    ┌─────────────┐    ┌─────────────┐
+│ @specify-reference│───▶│   @specify  │───▶│    @plan     │───▶│   @tasks    │───▶│ @implement  │
+│                   │    │             │    │              │    │             │    │             │
+│ Creates template  │    │ Uses folder │    │ Integrates   │    │ Includes    │    │ Executes    │
+│ in reference/     │    │ context +   │    │ reference    │    │ reference   │    │ code        │
+│                   │    │ creates     │    │ entities &   │    │ edge cases  │    │             │
+│                   │    │ spec.md     │    │ requirements │    │ & scenarios │    │             │
+└───────────────────┘    └─────────────┘    └──────────────┘    └─────────────┘    └─────────────┘
+                               ▲                   ▲                   ▲
+                               │                   │                   │
+                         ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+                         │ Reference   │    │ Reference   │    │ Reference   │
+                         │ Folder      │    │ Folder      │    │ Folder      │
+                         │ Context     │    │ Context     │    │ Context     │
+                         └─────────────┘    └─────────────┘    └─────────────┘
+```
+
+## Example Commands
 
 **Standard Workflow:**
 
-```
+```bash
 @specify Add JWT-based user authentication with login/logout
 @plan
 @tasks
 @implement
 ```
 
-**Enhanced with Reference File:**
+**Enhanced with Reference Folder:**
 
-```
-# 1. Create detailed requirements file with:
+```bash
+# 1. Create reference folder with requirements template
+@specify-reference user-authentication
+
+# 2. Edit .specify/reference/user-authentication/README.md with:
 #    - Primary User Story
 #    - Acceptance Scenarios
 #    - Edge Cases
 #    - Functional Requirements
 #    - Key Entities
-# Save as: .specify/reference/auth-requirements.md
 
-# 2. Create specification (automatically loads reference file)
-@specify Add user authentication ***using auth-requirements.md***
+# 3. Create specification (automatically loads reference folder)
+@specify Add user authentication ***using user-authentication***
 
-# 3. Generate plan (integrates reference file entities & requirements)
+# 4. Generate plan (integrates reference folder entities & requirements)
 @plan
 
-# 4. Create tasks (includes reference file edge cases & scenarios)
+# 5. Create tasks (includes reference folder edge cases & scenarios)
 @tasks
 
-# 5. Execute implementation
+# 6. Execute implementation
 @implement
 ```
 
-This generates design documents, creates a task list, and implements the feature following your project's constitutional principles. Reference files in `.specify/reference/` can provide additional context for the entire workflow.
+This generates design documents, creates a task list, and implements the feature following your project's constitutional principles. Reference folders in `.specify/reference/` can provide additional context for the entire workflow.
 
-## Reference Files
+## Reference Folders
 
-Place detailed requirements in `.specify/reference/[filename].md` to enhance your entire workflow:
+Create structured requirement folders in `.specify/reference/[folder-name]/` to enhance your entire workflow:
 
 - **Specifications** - Predefined user stories, acceptance criteria, edge cases
 - **Planning** - Technical constraints, functional requirements inform design decisions
 - **Tasks** - Additional test scenarios and implementation requirements
 
-Reference files are automatically integrated when mentioned in your `@specify` command.
+Reference folders are automatically integrated when mentioned in your `@specify` command. Each folder contains a README.md with structured requirements and can include additional supporting files.
 
 ## Available Prompts
 
 - `@audit` - Generate compliance audit and TODO list
 - `@constitution` - Update project constitution with versioning
-- `@specify` - Create feature specifications from descriptions (optionally using reference files)
+- `@specify-reference` - Create reference folder with requirements template
+- `@specify` - Create feature specifications from descriptions (optionally using reference folders)
 - `@plan` - Generate implementation plans and design artifacts
 - `@tasks` - Create dependency-ordered task breakdowns
 - `@implement` - Execute implementation following task plan

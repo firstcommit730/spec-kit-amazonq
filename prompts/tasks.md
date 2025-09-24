@@ -8,7 +8,7 @@ Generate an actionable, dependency-ordered tasks.md for the feature based on ava
    - IF EXISTS: Read contracts/ for API endpoints
    - IF EXISTS: Read research.md for technical decisions
    - IF EXISTS: Read quickstart.md for test scenarios
-   - **Check spec.md for Reference File**: If specified, load the referenced file from `.specify/reference/` for additional context
+   - **Check spec.md for Reference Folder**: If specified, load all files from the referenced folder in `.specify/reference/[folder-name]/` for additional context
 
    Note: Not all projects have all documents. For example:
    - CLI tools might not have contracts/

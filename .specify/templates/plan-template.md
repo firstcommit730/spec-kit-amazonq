@@ -1,19 +1,16 @@
 
 # Implementation Plan: [FEATURE]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `[feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Input**: Feature specification from `/specs/[feature-name]/spec.md`
 
 ## Execution Flow (/plan command scope)
 ```
 1. Load feature spec from Input path
    → If not found: ERROR "No feature spec at {path}"
-   → If Reference File specified: Load additional context from `.specify/reference/[filename].md`
 2. Fill Technical Context (scan for NEEDS CLARIFICATION)
-   → **Use reference file Functional Requirements to inform technical decisions**
    → Detect Project Type from context (web=frontend+backend, mobile=app+api)
    → Set Structure Decision based on project type
-   → **Consider reference file constraints and performance requirements**
 3. Fill the Constitution Check section based on the content of the constitution document.
 4. Evaluate Constitution Check section below
    → If violations exist: Document in Complexity Tracking
@@ -34,7 +31,7 @@
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
-[Extract from feature spec and reference file: primary requirement + technical approach from research + reference file context]
+[Extract from feature spec: primary requirement + technical approach from research]
 
 ## Technical Context
 **Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
@@ -56,7 +53,7 @@
 
 ### Documentation (this feature)
 ```
-specs/[###-feature]/
+specs/[feature]/
 ├── plan.md              # This file (/plan command output)
 ├── research.md          # Phase 0 output (/plan command)
 ├── data-model.md        # Phase 1 output (/plan command)
@@ -105,9 +102,8 @@ ios/ or android/
 **Structure Decision**: [DEFAULT to Option 1 unless Technical Context indicates web/mobile app]
 
 ## Phase 0: Outline & Research
-1. **Extract unknowns from Technical Context and reference file**:
+1. **Extract unknowns from Technical Context** above:
    - For each NEEDS CLARIFICATION → research task
-   - **For each reference file requirement needing clarification → research task**
    - For each dependency → best practices task
    - For each integration → patterns task
 
@@ -129,15 +125,13 @@ ios/ or android/
 ## Phase 1: Design & Contracts
 *Prerequisites: research.md complete*
 
-1. **Extract entities from feature spec and reference file** → `data-model.md`:
-   - Entity name, fields, relationships from spec and reference file
+1. **Extract entities from feature spec** → `data-model.md`:
+   - Entity name, fields, relationships
    - Validation rules from requirements
    - State transitions if applicable
-   - **Use reference file Key Entities section if available**
 
-2. **Generate API contracts** from functional requirements and reference file:
+2. **Generate API contracts** from functional requirements:
    - For each user action → endpoint
-   - **Use reference file Functional Requirements if available**
    - Use standard REST/GraphQL patterns
    - Output OpenAPI/GraphQL schema to `/contracts/`
 
@@ -146,15 +140,12 @@ ios/ or android/
    - Assert request/response schemas
    - Tests must fail (no implementation yet)
 
-4. **Extract test scenarios** from user stories and reference file:
+4. **Extract test scenarios** from user stories:
    - Each story → integration test scenario
-   - **Use reference file Primary User Story and Acceptance Scenarios if available**
-   - **Include reference file Edge Cases in test scenarios**
    - Quickstart test = story validation steps
 
 5. **Update agent file incrementally** (O(1) operation):
-   - Run `.specify/scripts/bash/update-agent-context.sh copilot`
-     **IMPORTANT**: Execute it exactly as specified above. Do not add or remove any arguments.
+   - Run `.specify/scripts/bash/update-agent-context.sh copilot` for your AI assistant
    - If exists: Add only NEW tech from current plan
    - Preserve manual additions between markers
    - Update recent changes (keep last 3)
@@ -169,11 +160,9 @@ ios/ or android/
 **Task Generation Strategy**:
 - Load `.specify/templates/tasks-template.md` as base
 - Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
-- **Consider reference file context for additional task requirements**
 - Each contract → contract test task [P]
 - Each entity → model creation task [P] 
 - Each user story → integration test task
-- **Reference file Edge Cases → additional test tasks**
 - Implementation tasks to make tests pass
 
 **Ordering Strategy**:

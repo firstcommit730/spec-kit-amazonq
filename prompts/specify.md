@@ -6,12 +6,13 @@ The user will provide a feature description. Use this description to create a co
    **IMPORTANT** You must only ever run this script once. The JSON is provided in the terminal as output - always refer to it to get the actual content you're looking for.
    **NOTE** Branch names no longer include number prefixes - they are created as feature-name format.
 
-1.5. **Optional Reference File**: If user mentions a reference file (e.g., "use auth-requirements.md"), check for `.specify/reference/[filename].md` and load it for additional context about:
-   - Primary User Story details
+1.5. **Optional Reference Folder**: If user mentions a reference folder (e.g., "using user-authentication"), check for `.specify/reference/[folder-name]/` and load all files in the folder for additional context about:
+   - Primary User Story details (from README.md)
    - Acceptance Scenarios examples
    - Edge Cases to consider
    - Functional Requirements templates
    - Key Entities definitions
+   - Any additional supporting files in the folder
 
 2. Load `.specify/templates/spec-template.md` to understand required sections.
 

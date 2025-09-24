@@ -1,10 +1,9 @@
 # Feature Specification: [FEATURE NAME]
 
-**Feature Branch**: `[###-feature-name]`  
+**Feature Branch**: `[feature-name]`  
 **Created**: [DATE]  
 **Status**: Draft  
-**Input**: User description: "$ARGUMENTS"  
-**Reference File**: [None | .specify/reference/[filename].md]
+**Input**: User description: "$ARGUMENTS"
 
 ## Execution Flow (main)
 ```
@@ -40,11 +39,10 @@
 
 ### For AI Generation
 When creating this spec from a user prompt:
-1. **Check for reference file**: If user mentions a filename, load `.specify/reference/[filename].md` for additional context
-2. **Mark all ambiguities**: Use [NEEDS CLARIFICATION: specific question] for any assumption you'd need to make
-3. **Don't guess**: If the prompt doesn't specify something (e.g., "login system" without auth method), mark it
-4. **Think like a tester**: Every vague requirement should fail the "testable and unambiguous" checklist item
-5. **Common underspecified areas**:
+1. **Mark all ambiguities**: Use [NEEDS CLARIFICATION: specific question] for any assumption you'd need to make
+2. **Don't guess**: If the prompt doesn't specify something (e.g., "login system" without auth method), mark it
+3. **Think like a tester**: Every vague requirement should fail the "testable and unambiguous" checklist item
+4. **Common underspecified areas**:
    - User types and permissions
    - Data retention/deletion policies  
    - Performance targets and scale

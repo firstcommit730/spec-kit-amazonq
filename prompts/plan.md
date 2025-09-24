@@ -7,7 +7,7 @@ Execute the implementation planning workflow using the plan template to generate
    - Functional and non-functional requirements
    - Success criteria and acceptance criteria
    - Any technical constraints or dependencies mentioned
-   - **If Reference File is specified**: Load the referenced file from `.specify/reference/` for additional context
+   - **If Reference Folder is specified**: Load all files from the referenced folder in `.specify/reference/[folder-name]/` for additional context
 
 3. Read the constitution at `.specify/memory/constitution.md` to understand constitutional requirements.
 
